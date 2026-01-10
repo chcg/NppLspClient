@@ -1,7 +1,7 @@
 # NppLSPClient
 A [LSP](https://microsoft.github.io/language-server-protocol/) client plugin for Notepad++.
 
-## Npp 8.6.3, 8.6.4 and 8.7.6 have introduced changes that disable notifications that this plugin relies on, and is therefore not compatible with these _specific_ versions. Sorry for the inconvenience.
+## Currently, Npp 8.7.7 is the minimum supported version.
 
 ***NOTE: The latest builds assume that the Folder as Workspace (faw) dialog is used.  
 This means that the rootUri component of the [initialize request](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#initializeParams) sent from the client to the server  
@@ -24,63 +24,11 @@ See [tips](./tips.md) for more information about usage and language server setup
 
 
 ## Building manually
-
-This plugin is written in the [programming language V](https://github.com/vlang/v) and must therefore be available to build this plugin.  
-Furthermore, a current version of the gcc compiler, >= version 10 recommended, must be installed.  
-An example for the use with NppExec:
-
-```
-cd $(CURRENT_DIRECTORY)
-
-set PROJECT=NppLspClient
-set VEXE=d:\programdata\compiler\v\v.exe
-
-set ARCH=x64
-set CC=gcc
-
-// build resources
-set local RC = $(CURRENT_DIRECTORY)\$(NAME_PART).rc
-cmd /c if not exist $(RC) exit -1
-if $(EXITCODE) == -1 then
-  set local RES_OBJ=
-else
-  set local RES_OBJ=-cflags $(CURRENT_DIRECTORY)\$(NAME_PART).res
-endif
-
-set NPPPATH=D:\Tests\npp\812\$(ARCH)
-set PLUGIN_DIR=$(NPPPATH)\plugins\$(PROJECT)
-
-cmd /c if not exist $(PLUGIN_DIR) exit -1
-
-if $(EXITCODE) == -1 then
-  cmd /c mkdir $(PLUGIN_DIR)
-endif
-
-set PLUGIN_PATH=$(PLUGIN_DIR)\$(PROJECT).dll
-
-set COMPILER_FLAGS= -g -d static_boehm -gc boehm -keepc -enable-globals -shared -d no_backtrace
-
-if $(ARCH)==x64 then
-  if $(CC)==gcc then
-    windres "$(RC)" -O coff -o "$(CURRENT_DIRECTORY)\$(NAME_PART).res"
-    echo $(VEXE) -cc $(CC) $(COMPILER_FLAGS) -cflags -static-libgcc -cflags -I$(CURRENT_DIRECTORY) $(RES_OBJ) -o $(PLUGIN_PATH) .
-    $(VEXE) -cc $(CC) $(COMPILER_FLAGS) -cflags -static-libgcc -cflags -I$(CURRENT_DIRECTORY) $(RES_OBJ) -o $(PLUGIN_PATH) .
-  endif  
-else
-  if $(CC)==gcc then
-    ENV_SET PATH=D:\ProgramData\Compiler\mingw32\bin
-    windres "$(RC)" -O coff -o "$(CURRENT_DIRECTORY)\$(NAME_PART).res"
-    $(VEXE) -cc $(CC) -m32 -g $(COMPILER_FLAGS) -cflags -static-libgcc -cflags -I$(CURRENT_DIRECTORY) $(RES_OBJ) -o $(PLUGIN_PATH) .
-    ENV_UNSET PATH
-  endif
-endif
-
-```
-
+tbd
 
 ## Release History
 
-* 0.0.13
+* 0.0.35
     * Work in progress
 
 ## Meta
